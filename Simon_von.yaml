@@ -1,0 +1,152 @@
+name: Simon_von
+source code: |
+  input: 'mabtematibka$'
+  blank: ' '
+  start state: hladaj_A
+  table:
+    #mohutnost znakov - [A,B,E,I,K,M,T]
+    
+  #A
+    hladaj_A:
+      [m,t,e,i,k,b]: R
+      a: {write: A, R: prepis_A}
+      #ak tam nie je ziadne acko
+      $: {L: hladaj_B}
+      
+      
+      
+    prepis_A:
+      [m,t,e,i,k,b,a,$]: R
+      ' ': {write: a, L: najdi_A}
+      
+    najdi_A:
+      [m,a,t,e,i,k,b,$]: L
+      A: {R: hladaj_A}
+    
+
+  #B
+    hladaj_B:
+      [m,t,e,i,k,A,a,$,B]: L
+      b: {write: B, R: prepis_B}
+      #ak tam nie je ziadne acko
+      ' ': {R: hladaj_E}
+      
+    prepis_B:
+      [m,t,e,i,k,b,$,A,a,B]: R
+      ' ': {write: b, L: k_dolaru}
+      
+    k_dolaru:
+      [a,b]: L
+      $: {L: hladaj_B}
+      
+
+      
+  #E
+    hladaj_E:
+      [A,B,e,i,k,m,t]: R
+      e: {write: E, R: prepis_E}
+      $: {L: hladaj_I}
+    prepis_E:
+      [A,B,a,b,e,i,k,m,t,$]: R
+      ' ': {write: e, L: najdi_E}
+    najdi_E:
+      [A,a,B,b,e,i,k,m,t,$]: L
+      E: {R: hladaj_E}
+
+  #mohutnost znakov - [A,B,E,I,K,M,T]
+  #I
+    hladaj_I:
+      [A,a,B,b,E,e,k,m,t,I]: L
+      i: {write: I,R: prepis_I}
+      ' ': {R: hladaj_K}
+      
+    prepis_I:
+      [A,a,B,b,i,e,k,m,t,$]: R
+      ' ': {write: i, L: k_dolaru_I}
+    k_dolaru_I:
+      [a,b,e,i]: L
+      $: {L: hladaj_I}
+      
+      
+  #K
+    hladaj_K:
+      [A,B,E,I,k,m,t]: R
+      k: {write: K, R: prepis_K}
+      $: {L: hladaj_M}
+      
+    prepis_K:
+      [A,a,B,b,E,e,I,i,m,k,$]: R
+      ' ': {write: k, L: najdi_K}
+      
+    najdi_K:
+      [A,a,B,b,E,e,I,i,k,t,m,$]: L
+      K: {R: hladaj_K}
+      
+      
+      
+  #M
+    hladaj_M:
+      [A,a,B,b,E,e,I,i,K,k,M,t,$]: L
+      m: {write: M, R: prepis_M}
+      ' ': {R: hladaj_T}
+    prepis_M:
+      [A,a,B,b,I,i,K,k,e,E,m,t,$,M]: R
+      ' ': {write: m, L: k_dolaru_M}
+      
+    k_dolaru_M:
+      [a,b,e,i,k,m]: L
+      $: {L: hladaj_M}
+      
+    
+    
+  #T
+    hladaj_T:
+      [A,B,E,I,K,M,t]: R
+      t: {write: T, L: prepis_T}
+      $: {L: done}
+      
+    prepis_T:
+      [A,a,B,b,E,e,I,i,K,k,M,m,t,T,$]: R
+      ' ': {write: t, L: najdi_T}
+      
+    najdi_T:
+      [A,a,B,b,E,e,I,i,K,k,T,t,m,M,$]: L
+      T: {R: hladaj_T}
+    
+      
+      
+  #hotovo - prepis
+    done:
+      A: {write: a, L}
+      B: {write: b, L}
+      E: {write: e, L}
+      I: {write: i, L}
+      K: {write: k, L}
+      T: {write: t, L}
+      M: {write: m, L}
+      
+    
+    
+positions:
+  hladaj_A: {x: 114.3, y: 356.35, fixed: false}
+  prepis_A: {x: 49.52, y: 480, fixed: false}
+  najdi_A: {x: 190.03, y: 480, fixed: false}
+  hladaj_B: {x: 145.46, y: 214.56, fixed: false}
+  prepis_B: {x: 129.3, y: 61.21, fixed: false}
+  k_dolaru: {x: 20, y: 147.24, fixed: false}
+  hladaj_E: {x: 288.29, y: 265.69, fixed: false}
+  prepis_E: {x: 344.01, y: 129.36, fixed: false}
+  najdi_E: {x: 211.04, y: 137.76, fixed: false}
+  hladaj_I: {x: 416.77, y: 357.27, fixed: false}
+  prepis_I: {x: 486.55, y: 480, fixed: false}
+  k_dolaru_I: {x: 345.42, y: 480, fixed: false}
+  hladaj_K: {x: 576.05, y: 358.06, fixed: false}
+  prepis_K: {x: 655.68, y: 480, fixed: false}
+  najdi_K: {x: 725.29, y: 359.36, fixed: false}
+  hladaj_M: {x: 593.54, y: 206.98, fixed: false}
+  prepis_M: {x: 703.19, y: 142.32}
+  k_dolaru_M: {x: 615.35, y: 50.56, fixed: false}
+  hladaj_T: {x: 469.11, y: 136.7, fixed: false}
+  prepis_T: {x: 389.15, y: 20, fixed: false}
+  najdi_T: {x: 532.3, y: 20, fixed: false}
+  done: {x: 497.08, y: 274.65, fixed: false}
